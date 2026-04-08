@@ -10,8 +10,8 @@ ROOT = Path(__file__).resolve().parents[2]
 RESULTS = ROOT / "results"
 OUT_DIR = ROOT / "plots"
 
-KMEANS_FILE = RESULTS / "l4-tritonbench-20260408-111218.json"
-LARGE_FILE = RESULTS / "l4-tritonbench-20260408-110716.json"
+KMEANS_FILE = RESULTS / "l4-tritonbench-20260408-121555.json"
+LARGE_FILE = RESULTS / "l4-tritonbench-20260408-121605.json"
 
 BACKENDS = [
     "torch_mm",

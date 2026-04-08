@@ -94,28 +94,30 @@ The large-shape plot includes the custom kernels together with `torch_mm`, `torc
 
 The baseline-relative plot compares every backend against `torch_mm` on each tested shape using `TFLOPS / torch_mm`.
 
+The `colb` variants are benchmarked with `B` pretransposed so the plots measure kernel runtime instead of transpose overhead.
+
 ![Large-shape TFLOPS](./plots/large_tflops.png)
 
 ![Baseline-relative TFLOPS](./plots/baseline_relative_tflops.png)
 
-K-means-like shapes on L4 (`results/l4-tritonbench-20260408-111218.json`):
+K-means-like shapes on L4 (`results/l4-tritonbench-20260408-121555.json`):
 
-| Shape | torch_mm | 256 | 256_mma | 256_colb | 256_colb_mma |
-|---|---:|---:|---:|---:|---:|
-| `16384x256x256` | 25.58 | 22.31 | 14.77 | 21.40 | 16.64 |
-| `16384x512x256` | 36.16 | 33.55 | 20.07 | 33.03 | 23.83 |
-| `16384x1024x256` | 44.86 | 41.53 | 23.56 | 40.33 | 27.32 |
-| `32768x1024x256` | 45.71 | 43.69 | 22.70 | 42.58 | 27.55 |
+| Shape | torch_mm | torch_matmul | cublas_gemm | 256 | 256_mma | 256_colb | 256_colb_mma |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| `16384x256x256` | 24.67 | 24.67 | 24.67 | 22.31 | 14.78 | 22.08 | 20.76 |
+| `16384x512x256` | 36.16 | 36.16 | 35.85 | 33.55 | 20.07 | 33.55 | 32.51 |
+| `16384x1024x256` | 45.59 | 45.34 | 45.59 | 41.94 | 23.56 | 42.15 | 36.16 |
+| `32768x1024x256` | 46.09 | 45.96 | 45.84 | 44.50 | 22.22 | 44.38 | 38.57 |
 
-Larger shapes on L4 (`results/l4-tritonbench-20260408-110716.json`):
+Larger shapes on L4 (`results/l4-tritonbench-20260408-121605.json`):
 
-| Shape | torch_mm | 256 | 256_mma | 256_colb | 256_colb_mma |
-|---|---:|---:|---:|---:|---:|
-| `2048x2048x2048` | 63.07 | 57.26 | 32.96 | 39.95 | 36.00 |
-| `4096x4096x4096` | 59.34 | 63.22 | 37.85 | 45.12 | 46.49 |
-| `8192x8192x8192` | 59.28 | 54.14 | 37.67 | 43.39 | 40.52 |
-| `4096x8192x4096` | 66.48 | 57.38 | 39.11 | 44.38 | 44.79 |
-| `8192x4096x4096` | 57.32 | 59.77 | 39.09 | 52.08 | 50.52 |
+| Shape | torch_mm | torch_matmul | cublas_gemm | 256 | 256_mma | 256_colb | 256_colb_mma |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| `2048x2048x2048` | 63.07 | 61.68 | 62.37 | 56.68 | 32.58 | 54.83 | 52.92 |
+| `4096x4096x4096` | 63.34 | 59.36 | 56.90 | 57.36 | 36.48 | 56.78 | 59.71 |
+| `8192x8192x8192` | 58.54 | 57.71 | 55.81 | 52.26 | 37.21 | 46.36 | 46.73 |
+| `4096x8192x4096` | 61.68 | 64.20 | 64.20 | 59.00 | 38.15 | 53.38 | 54.66 |
+| `8192x4096x4096` | 54.86 | 56.50 | 51.56 | 58.91 | 38.30 | 56.56 | 58.04 |
 
 More detail:
 

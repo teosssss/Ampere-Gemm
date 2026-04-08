@@ -9,7 +9,7 @@ from typing import Any, Generator
 import torch
 from tritonbench.utils.triton_op import BenchmarkOperator, REGISTERED_X_VALS, override_args
 
-from tensorcore_gemm import KERNEL_MODES, gemm
+from tensorcore_gemm import KERNEL_MODES, gemm, gemm_pretransposed
 from tensorcore_gemm.cublas_gemm import gemm as cublas_gemm
 
 
@@ -79,34 +79,46 @@ class TensorCoreGemmOperator(BenchmarkOperator):
         super().__init__(tb_args, extra_args)
         REGISTERED_X_VALS[self.name] = "(M, N, K)"
 
-        self.add_benchmark("torch_mm", lambda a, b: torch.mm(a, b), baseline=(tb_args.baseline == "torch_mm"))
+        self.add_benchmark("torch_mm", lambda a, b, _b_col: torch.mm(a, b), baseline=(tb_args.baseline == "torch_mm"))
         self.add_benchmark(
             "torch_matmul",
-            lambda a, b: torch.matmul(a, b),
+            lambda a, b, _b_col: torch.matmul(a, b),
             baseline=(tb_args.baseline == "torch_matmul"),
         )
         self.add_benchmark(
             "cublas_gemm",
-            lambda a, b: cublas_gemm(a, b),
+            lambda a, b, _b_col: cublas_gemm(a, b),
             baseline=(tb_args.baseline == "cublas_gemm"),
         )
         for mode in self._modes:
-            self.add_benchmark(mode, lambda a, b, mode=mode: gemm(a, b, mode=mode), baseline=(tb_args.baseline == mode))
+            if mode in {"reg_pingpong_256_colb", "reg_pingpong_256_colb_mma"}:
+                self.add_benchmark(
+                    mode,
+                    lambda a, _b, b_col, mode=mode: gemm_pretransposed(a, b_col, mode=mode),
+                    baseline=(tb_args.baseline == mode),
+                )
+            else:
+                self.add_benchmark(
+                    mode,
+                    lambda a, b, _b_col, mode=mode: gemm(a, b, mode=mode),
+                    baseline=(tb_args.baseline == mode),
+                )
 
-    def get_input_iter(self) -> Generator[tuple[torch.Tensor, torch.Tensor], None, None]:
+    def get_input_iter(self) -> Generator[tuple[torch.Tensor, torch.Tensor, torch.Tensor], None, None]:
         for m, n, k in self._cases:
             a = torch.randn((m, k), device=self.device, dtype=self._input_dtype)
             b = torch.randn((k, n), device=self.device, dtype=self._input_dtype)
-            yield a, b
+            b_col_major = b.transpose(0, 1).contiguous()
+            yield a, b, b_col_major
 
     def get_x_val(self, example_inputs: Any) -> tuple[int, int, int]:
-        a, b = example_inputs
+        a, b, _b_col = example_inputs
         m, k = a.shape
         _, n = b.shape
         return (m, n, k)
 
     def flops(self, fn_name: str, example_inputs: Any, metrics: Any) -> float:
-        a, b = example_inputs
+        a, b, _b_col = example_inputs
         m, k = a.shape
         _, n = b.shape
         return float(2 * m * n * k)
