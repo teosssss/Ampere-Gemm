@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-04-08 09:28:16",
+  "device": "NVIDIA L4",
+  "dtype": "float16",
+  "metrics": [
+    "latency",
+    "tflops",
+    "speedup",
+    "accuracy"
+  ],
+  "baseline": "torch_mm",
+  "cases": [
+    {
+      "shape": {
+        "m": 16384,
+        "n": 1024,
+        "k": 256
+      },
+      "results": [
+        {
+          "backend": "torch_mm",
+          "latency_ms": 0.18943999707698822,
+          "tflops": 45.34382772667094,
+          "speedup_vs_baseline": null,
+          "accuracy_vs_baseline": null,
+          "error": null
+        },
+        {
+          "backend": "torch_matmul",
+          "latency_ms": 0.19046400487422943,
+          "tflops": 45.100041856582074,
+          "speedup_vs_baseline": 0.994623615113431,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "cublas_gemm",
+          "latency_ms": 0.19148799777030945,
+          "tflops": 44.85886683249807,
+          "speedup_vs_baseline": 0.9893048090889863,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256_colb",
+          "latency_ms": 0.21503999829292297,
+          "tflops": 39.9457526980584,
+          "speedup_vs_baseline": 0.8809523743528729,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256_colb_mma",
+          "latency_ms": 0.2467840015888214,
+          "tflops": 34.80750185059443,
+          "speedup_vs_baseline": 0.7676348379852566,
+          "accuracy_vs_baseline": true,
+          "error": null
+        }
+      ]
+    }
+  ]
+}

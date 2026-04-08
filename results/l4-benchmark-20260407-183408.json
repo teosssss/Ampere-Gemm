@@ -1,0 +1,49 @@
+{
+  "timestamp": "2026-04-07 16:31:52",
+  "device": "NVIDIA L4",
+  "dtype": "float16",
+  "warmup": 5,
+  "iters": 10,
+  "cases": [
+    {
+      "shape": {
+        "m": 16384,
+        "n": 512,
+        "k": 256
+      },
+      "baselines": {
+        "matmul_ms": 0.07864320278167725,
+        "mm_ms": 0.07915520071983337,
+        "cublas_ms": 0.07915520071983337,
+        "matmul_tflops": 54.613331401613095,
+        "mm_tflops": 54.260077126225255,
+        "cublas_tflops": 54.260077126225255,
+        "matmul_equals_mm": true,
+        "matmul_vs_mm_max_abs_diff": 0.0,
+        "matmul_vs_mm_mean_abs_diff": 0.0,
+        "cublas_close_vs_mm": true,
+        "cublas_vs_mm_max_abs_diff": 0.0,
+        "cublas_vs_mm_mean_abs_diff": 0.0
+      },
+      "results": [
+        {
+          "mode": "reg_pingpong_256_mma",
+          "close_vs_torch_mm": true,
+          "max_abs_err_vs_torch_mm": 0.0,
+          "mean_abs_err_vs_torch_mm": 0.0,
+          "kernel_ms": 0.18257919549942017,
+          "kernel_tflops": 23.52385924503452,
+          "pct_of_torch_matmul_tflops": 43.073474262256234,
+          "pct_of_torch_mm_tflops": 43.35389938777814,
+          "latency_pct_of_torch_matmul": 232.16144439880128,
+          "latency_pct_of_torch_mm": 230.65975935763444,
+          "latency_pct_of_cublas": 230.65975935763444,
+          "speedup_vs_torch_matmul": 0.4307347426225624,
+          "speedup_vs_torch_mm": 0.4335389938777814,
+          "speedup_vs_cublas": 0.4335389938777814,
+          "pct_of_cublas_tflops": 43.35389938777814
+        }
+      ]
+    }
+  ]
+}

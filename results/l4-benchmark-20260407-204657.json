@@ -1,0 +1,164 @@
+{
+  "timestamp": "2026-04-07 18:45:20",
+  "device": "NVIDIA L4",
+  "dtype": "float16",
+  "warmup": 5,
+  "iters": 10,
+  "benchmark_type": "fair_pretransposed_for_colb",
+  "cases": [
+    {
+      "shape": {
+        "m": 16384,
+        "n": 512,
+        "k": 256
+      },
+      "transpose_ms": 0.015769599378108977,
+      "baselines": {
+        "matmul_ms": 0.07383040189743043,
+        "mm_ms": 0.0732159972190857,
+        "cublas_ms": 0.0732159972190857,
+        "matmul_tflops": 58.17342430245501,
+        "mm_tflops": 58.661596633698544,
+        "cublas_tflops": 58.661596633698544,
+        "matmul_equals_mm": true,
+        "matmul_vs_mm_max_abs_diff": 0.0,
+        "matmul_vs_mm_mean_abs_diff": 0.0,
+        "cublas_close_vs_mm": true,
+        "cublas_vs_mm_max_abs_diff": 0.0,
+        "cublas_vs_mm_mean_abs_diff": 0.0
+      },
+      "results": [
+        {
+          "mode": "reg_pingpong_256_mma",
+          "close_vs_torch_mm": false,
+          "max_abs_err_vs_torch_mm": 68.8125,
+          "mean_abs_err_vs_torch_mm": 9.5625,
+          "kernel_ms": 0.18677760362625123,
+          "kernel_tflops": 22.99508727285304,
+          "pct_of_torch_matmul_tflops": 39.52850902036828,
+          "pct_of_torch_mm_tflops": 39.19955915356617,
+          "latency_pct_of_torch_matmul": 252.9819678968208,
+          "latency_pct_of_torch_mm": 255.1049097471866,
+          "latency_pct_of_cublas": 255.1049097471866,
+          "speedup_vs_torch_matmul": 0.3952850902036828,
+          "speedup_vs_torch_mm": 0.39199559153566166,
+          "speedup_vs_cublas": 0.39199559153566166,
+          "pct_of_cublas_tflops": 39.19955915356617
+        },
+        {
+          "mode": "reg_pingpong_256_colb_mma",
+          "close_vs_torch_mm": true,
+          "max_abs_err_vs_torch_mm": 0.0,
+          "mean_abs_err_vs_torch_mm": 0.0,
+          "kernel_ms": 0.15104000568389891,
+          "kernel_tflops": 28.435958251939137,
+          "pct_of_torch_matmul_tflops": 48.8813553489563,
+          "pct_of_torch_mm_tflops": 48.47457260582627,
+          "latency_pct_of_torch_matmul": 204.57697886262713,
+          "latency_pct_of_torch_mm": 206.29372189241494,
+          "latency_pct_of_cublas": 206.29372189241494,
+          "speedup_vs_torch_matmul": 0.488813553489563,
+          "speedup_vs_torch_mm": 0.48474572605826266,
+          "speedup_vs_cublas": 0.48474572605826266,
+          "pct_of_cublas_tflops": 48.47457260582627,
+          "transpose_ms_separate": 0.015769599378108977,
+          "kernel_plus_transpose_ms": 0.1668096050620079
+        },
+        {
+          "mode": "reg_pingpong_256",
+          "close_vs_torch_mm": true,
+          "max_abs_err_vs_torch_mm": 0.0,
+          "mean_abs_err_vs_torch_mm": 0.0,
+          "kernel_ms": 0.07761920094490052,
+          "kernel_tflops": 55.333825183911195,
+          "pct_of_torch_matmul_tflops": 95.11873479584048,
+          "pct_of_torch_mm_tflops": 94.32717204994096,
+          "latency_pct_of_torch_matmul": 105.1317600203961,
+          "latency_pct_of_torch_mm": 106.01399133121008,
+          "latency_pct_of_cublas": 106.01399133121008,
+          "speedup_vs_torch_matmul": 0.9511873479584048,
+          "speedup_vs_torch_mm": 0.9432717204994094,
+          "speedup_vs_cublas": 0.9432717204994094,
+          "pct_of_cublas_tflops": 94.32717204994096
+        }
+      ]
+    },
+    {
+      "shape": {
+        "m": 4096,
+        "n": 4096,
+        "k": 4096
+      },
+      "transpose_ms": 0.5326848030090332,
+      "baselines": {
+        "matmul_ms": 1.9762176513671874,
+        "mm_ms": 2.666803169250488,
+        "cublas_ms": 2.693734359741211,
+        "matmul_tflops": 69.54646588492768,
+        "mm_tflops": 51.536969453440236,
+        "cublas_tflops": 51.02171748115648,
+        "matmul_equals_mm": true,
+        "matmul_vs_mm_max_abs_diff": 0.0,
+        "matmul_vs_mm_mean_abs_diff": 0.0,
+        "cublas_close_vs_mm": true,
+        "cublas_vs_mm_max_abs_diff": 0.0,
+        "cublas_vs_mm_mean_abs_diff": 0.0
+      },
+      "results": [
+        {
+          "mode": "reg_pingpong_256_mma",
+          "close_vs_torch_mm": false,
+          "max_abs_err_vs_torch_mm": 305.25,
+          "mean_abs_err_vs_torch_mm": 42.96875,
+          "kernel_ms": 3.5110912322998047,
+          "kernel_tflops": 39.14422735805014,
+          "pct_of_torch_matmul_tflops": 56.284998612033846,
+          "pct_of_torch_mm_tflops": 75.9536848463975,
+          "latency_pct_of_torch_matmul": 177.66723366076405,
+          "latency_pct_of_torch_mm": 131.6591817793064,
+          "latency_pct_of_cublas": 130.34289070126118,
+          "speedup_vs_torch_matmul": 0.5628499861203385,
+          "speedup_vs_torch_mm": 0.7595368484639751,
+          "speedup_vs_cublas": 0.767207167663594,
+          "pct_of_cublas_tflops": 76.72071676635939
+        },
+        {
+          "mode": "reg_pingpong_256_colb_mma",
+          "close_vs_torch_mm": true,
+          "max_abs_err_vs_torch_mm": 0.0,
+          "mean_abs_err_vs_torch_mm": 0.0,
+          "kernel_ms": 2.2305791854858397,
+          "kernel_tflops": 61.61581456793904,
+          "pct_of_torch_matmul_tflops": 88.5966149162622,
+          "pct_of_torch_mm_tflops": 119.5565343119453,
+          "latency_pct_of_torch_matmul": 112.87112955107347,
+          "latency_pct_of_torch_mm": 83.64243792738365,
+          "latency_pct_of_cublas": 82.80620460660913,
+          "speedup_vs_torch_matmul": 0.8859661491626221,
+          "speedup_vs_torch_mm": 1.195565343119453,
+          "speedup_vs_cublas": 1.2076389743386278,
+          "pct_of_cublas_tflops": 120.76389743386277,
+          "transpose_ms_separate": 0.5326848030090332,
+          "kernel_plus_transpose_ms": 2.763263988494873
+        },
+        {
+          "mode": "reg_pingpong_256",
+          "close_vs_torch_mm": true,
+          "max_abs_err_vs_torch_mm": 0.0,
+          "mean_abs_err_vs_torch_mm": 0.0,
+          "kernel_ms": 2.2859775543212892,
+          "kernel_tflops": 60.12261722001285,
+          "pct_of_torch_matmul_tflops": 86.44956498507396,
+          "pct_of_torch_mm_tflops": 116.65920184602453,
+          "latency_pct_of_torch_matmul": 115.67438195584397,
+          "latency_pct_of_torch_mm": 85.71977042324309,
+          "latency_pct_of_cublas": 84.86276852261352,
+          "speedup_vs_torch_matmul": 0.8644956498507397,
+          "speedup_vs_torch_mm": 1.1665920184602454,
+          "speedup_vs_cublas": 1.1783730573596929,
+          "pct_of_cublas_tflops": 117.8373057359693
+        }
+      ]
+    }
+  ]
+}

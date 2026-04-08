@@ -1,0 +1,36 @@
+{
+  "timestamp": "2026-04-07 11:08:23",
+  "device": "NVIDIA L4",
+  "shape": {
+    "m": 4096,
+    "n": 4096,
+    "k": 4096
+  },
+  "dtype": "float16",
+  "warmup": 20,
+  "iters": 50,
+  "results": [
+    {
+      "mode": "wmma",
+      "close": true,
+      "max_abs_err": 0.0,
+      "mean_abs_err": 0.0,
+      "kernel_ms": 3.1575653076171877,
+      "torch_ms": 2.673090515136719,
+      "kernel_tflops": 43.526875957386416,
+      "torch_tflops": 51.41574993204841,
+      "speedup_vs_torch": 0.8465669763625345
+    },
+    {
+      "mode": "mma",
+      "close": true,
+      "max_abs_err": 0.0,
+      "mean_abs_err": 0.0,
+      "kernel_ms": 3.2208486938476564,
+      "torch_ms": 2.7474740600585936,
+      "kernel_tflops": 42.671657856679424,
+      "torch_tflops": 50.0237492575522,
+      "speedup_vs_torch": 0.8530279815089467
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "timestamp": "2026-04-07 17:36:22",
+  "device": "NVIDIA L4",
+  "dtype": "float16",
+  "warmup": 5,
+  "iters": 10,
+  "benchmark_type": "fair_pretransposed_for_colb",
+  "cases": [
+    {
+      "shape": {
+        "m": 16384,
+        "n": 512,
+        "k": 256
+      },
+      "transpose_ms": 0.013823999464511872,
+      "baselines": {
+        "matmul_ms": 0.0754688024520874,
+        "mm_ms": 0.07526400089263915,
+        "cublas_ms": 0.07464960217475891,
+        "matmul_tflops": 56.91050018617601,
+        "mm_tflops": 57.06535986741637,
+        "cublas_tflops": 57.53503261739079,
+        "matmul_equals_mm": true,
+        "matmul_vs_mm_max_abs_diff": 0.0,
+        "matmul_vs_mm_mean_abs_diff": 0.0,
+        "cublas_close_vs_mm": true,
+        "cublas_vs_mm_max_abs_diff": 0.0,
+        "cublas_vs_mm_mean_abs_diff": 0.0
+      },
+      "results": [
+        {
+          "mode": "reg_pingpong_256_colb_mma",
+          "close_vs_torch_mm": true,
+          "max_abs_err_vs_torch_mm": 0.0,
+          "mean_abs_err_vs_torch_mm": 0.0,
+          "kernel_ms": 0.1505280017852783,
+          "kernel_tflops": 28.532679933708184,
+          "pct_of_torch_matmul_tflops": 50.13605545614057,
+          "pct_of_torch_mm_tflops": 50.00000000000001,
+          "latency_pct_of_torch_matmul": 199.45725504368968,
+          "latency_pct_of_torch_mm": 200.0,
+          "latency_pct_of_cublas": 201.64608705198964,
+          "speedup_vs_torch_matmul": 0.5013605545614057,
+          "speedup_vs_torch_mm": 0.5,
+          "speedup_vs_cublas": 0.4959183759128308,
+          "pct_of_cublas_tflops": 49.59183759128308,
+          "transpose_ms_separate": 0.013823999464511872,
+          "kernel_plus_transpose_ms": 0.16435200124979019
+        },
+        {
+          "mode": "reg_pingpong_256_mma",
+          "close_vs_torch_mm": true,
+          "max_abs_err_vs_torch_mm": 0.0,
+          "mean_abs_err_vs_torch_mm": 0.0,
+          "kernel_ms": 0.17838079929351808,
+          "kernel_tflops": 24.077520187208112,
+          "pct_of_torch_matmul_tflops": 42.307693849889446,
+          "pct_of_torch_mm_tflops": 42.19288241263871,
+          "latency_pct_of_torch_matmul": 236.36362774772533,
+          "latency_pct_of_torch_mm": 237.00679897149047,
+          "latency_pct_of_cublas": 238.95746808659288,
+          "speedup_vs_torch_matmul": 0.42307693849889455,
+          "speedup_vs_torch_mm": 0.42192882412638716,
+          "speedup_vs_cublas": 0.41848451442313667,
+          "pct_of_cublas_tflops": 41.84845144231366
+        }
+      ]
+    }
+  ]
+}

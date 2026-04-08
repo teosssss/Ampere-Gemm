@@ -1,0 +1,257 @@
+{
+  "timestamp": "2026-04-07 16:58:31",
+  "device": "NVIDIA L4",
+  "dtype": "float16",
+  "metrics": [
+    "latency",
+    "tflops",
+    "speedup",
+    "accuracy"
+  ],
+  "baseline": "torch_mm",
+  "cases": [
+    {
+      "shape": {
+        "m": 2048,
+        "n": 2048,
+        "k": 2048
+      },
+      "results": [
+        {
+          "backend": "torch_mm",
+          "latency_ms": 0.27750399708747864,
+          "tflops": 61.90854677521753,
+          "speedup_vs_baseline": null,
+          "accuracy_vs_baseline": null,
+          "error": null
+        },
+        {
+          "backend": "torch_matmul",
+          "latency_ms": 0.2826240062713623,
+          "tflops": 60.78701314390362,
+          "speedup_vs_baseline": 0.9818840258779444,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "cublas_gemm",
+          "latency_ms": 0.2805759906768799,
+          "tflops": 61.23071736307215,
+          "speedup_vs_baseline": 0.98905111737469,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "wmma",
+          "latency_ms": 0.4403199851512909,
+          "tflops": 39.01678271109388,
+          "speedup_vs_baseline": 0.6302325727780222,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "mma",
+          "latency_ms": 0.47513601183891296,
+          "tflops": 36.157792202508425,
+          "speedup_vs_baseline": 0.5840517034553083,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256",
+          "latency_ms": 0.30105599761009216,
+          "tflops": 57.06536099722627,
+          "speedup_vs_baseline": 0.921768705126026,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256_mma",
+          "latency_ms": 0.44441598653793335,
+          "tflops": 38.65718089448973,
+          "speedup_vs_baseline": 0.6244239754948423,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256_colb",
+          "latency_ms": 0.43212801218032837,
+          "tflops": 39.756434898348566,
+          "speedup_vs_baseline": 0.6421800699457442,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256_colb_mma",
+          "latency_ms": 0.4761599898338318,
+          "tflops": 36.08003517892243,
+          "speedup_vs_baseline": 0.5827957052509195,
+          "accuracy_vs_baseline": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "shape": {
+        "m": 4096,
+        "n": 4096,
+        "k": 4096
+      },
+      "results": [
+        {
+          "backend": "torch_mm",
+          "latency_ms": 2.3787519931793213,
+          "tflops": 57.77775651521618,
+          "speedup_vs_baseline": null,
+          "accuracy_vs_baseline": null,
+          "error": null
+        },
+        {
+          "backend": "torch_matmul",
+          "latency_ms": 2.2865920066833496,
+          "tflops": 60.1064610871933,
+          "speedup_vs_baseline": 1.0403045170395955,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "cublas_gemm",
+          "latency_ms": 2.4145920276641846,
+          "tflops": 56.92015541232238,
+          "speedup_vs_baseline": 0.9851568985260281,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "wmma",
+          "latency_ms": 3.0607359409332275,
+          "tflops": 44.90389113086785,
+          "speedup_vs_baseline": 0.7771830171190895,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "mma",
+          "latency_ms": 3.1201279163360596,
+          "tflops": 44.049140662602525,
+          "speedup_vs_baseline": 0.7623892535703056,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256",
+          "latency_ms": 2.4135680198669434,
+          "tflops": 56.94430500432999,
+          "speedup_vs_baseline": 0.9855748723876688,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256_mma",
+          "latency_ms": 3.0740480422973633,
+          "tflops": 44.709435760570024,
+          "speedup_vs_baseline": 0.7738174421638452,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256_colb",
+          "latency_ms": 2.8590080738067627,
+          "tflops": 48.07225090798725,
+          "speedup_vs_baseline": 0.8320200334418848,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256_colb_mma",
+          "latency_ms": 2.9480960369110107,
+          "tflops": 46.619564543089766,
+          "speedup_vs_baseline": 0.8068773755660134,
+          "accuracy_vs_baseline": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "shape": {
+        "m": 8192,
+        "n": 8192,
+        "k": 8192
+      },
+      "results": [
+        {
+          "backend": "torch_mm",
+          "latency_ms": 19.2174072265625,
+          "tflops": 57.21435856634414,
+          "speedup_vs_baseline": null,
+          "accuracy_vs_baseline": null,
+          "error": null
+        },
+        {
+          "backend": "torch_matmul",
+          "latency_ms": 19.536895751953125,
+          "tflops": 56.27872727252899,
+          "speedup_vs_baseline": 0.983646914563759,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "cublas_gemm",
+          "latency_ms": 18.529279708862305,
+          "tflops": 59.3391456684697,
+          "speedup_vs_baseline": 1.0371373053088013,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "wmma",
+          "latency_ms": 25.373695373535156,
+          "tflops": 43.33273540135561,
+          "speedup_vs_baseline": 0.7573751849565561,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "mma",
+          "latency_ms": 26.12838363647461,
+          "tflops": 42.08111925611455,
+          "speedup_vs_baseline": 0.7354992751918819,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256",
+          "latency_ms": 21.428224563598633,
+          "tflops": 51.31137320839003,
+          "speedup_vs_baseline": 0.896826854204628,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256_mma",
+          "latency_ms": 25.91231918334961,
+          "tflops": 42.43200386642772,
+          "speedup_vs_baseline": 0.741632082045013,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256_colb",
+          "latency_ms": 24.56268882751465,
+          "tflops": 44.76348804876559,
+          "speedup_vs_baseline": 0.7823820658036238,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256_colb_mma",
+          "latency_ms": 25.403392791748047,
+          "tflops": 43.28207798027521,
+          "speedup_vs_baseline": 0.7564897879626936,
+          "accuracy_vs_baseline": true,
+          "error": null
+        }
+      ]
+    }
+  ]
+}

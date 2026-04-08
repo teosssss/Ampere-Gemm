@@ -1,0 +1,237 @@
+{
+  "timestamp": "2026-04-07 14:55:45",
+  "device": "NVIDIA L4",
+  "dtype": "float16",
+  "warmup": 10,
+  "iters": 30,
+  "cases": [
+    {
+      "shape": {
+        "m": 16384,
+        "n": 256,
+        "k": 256
+      },
+      "baselines": {
+        "matmul_ms": 0.0400383989016215,
+        "mm_ms": 0.03945813179016113,
+        "cublas_ms": 0.03952639897664388,
+        "matmul_tflops": 53.63560249441018,
+        "mm_tflops": 54.42436199007968,
+        "cublas_tflops": 54.33036410093788,
+        "matmul_equals_mm": true,
+        "matmul_vs_mm_max_abs_diff": 0.0,
+        "matmul_vs_mm_mean_abs_diff": 0.0,
+        "cublas_close_vs_mm": true,
+        "cublas_vs_mm_max_abs_diff": 0.0,
+        "cublas_vs_mm_mean_abs_diff": 0.0
+      },
+      "results": [
+        {
+          "mode": "wmma",
+          "close_vs_torch_mm": true,
+          "max_abs_err_vs_torch_mm": 0.0,
+          "mean_abs_err_vs_torch_mm": 0.0,
+          "kernel_ms": 0.053760000069936115,
+          "kernel_tflops": 39.94575232898715,
+          "pct_of_torch_matmul_tflops": 74.47618833619,
+          "pct_of_torch_mm_tflops": 73.39682243085981,
+          "latency_pct_of_torch_matmul": 134.2711036023943,
+          "latency_pct_of_torch_mm": 136.2456802461721,
+          "latency_pct_of_cublas": 136.01036639260474,
+          "speedup_vs_torch_matmul": 0.7447618833619001,
+          "speedup_vs_torch_mm": 0.7339682243085983,
+          "speedup_vs_cublas": 0.7352380752459856,
+          "pct_of_cublas_tflops": 73.52380752459854
+        },
+        {
+          "mode": "mma",
+          "close_vs_torch_mm": false,
+          "max_abs_err_vs_torch_mm": 88.1875,
+          "mean_abs_err_vs_torch_mm": 12.328125,
+          "kernel_ms": 0.5943978627522787,
+          "kernel_tflops": 3.6128724253084767,
+          "pct_of_torch_matmul_tflops": 6.735959432328563,
+          "pct_of_torch_mm_tflops": 6.638336754350966,
+          "latency_pct_of_torch_matmul": 1484.5695109156984,
+          "latency_pct_of_torch_mm": 1506.401433076696,
+          "latency_pct_of_cublas": 1503.7996836076768,
+          "speedup_vs_torch_matmul": 0.06735959432328563,
+          "speedup_vs_torch_mm": 0.06638336754350967,
+          "speedup_vs_cublas": 0.06649821853938413,
+          "pct_of_cublas_tflops": 6.649821853938412
+        }
+      ]
+    },
+    {
+      "shape": {
+        "m": 16384,
+        "n": 512,
+        "k": 256
+      },
+      "baselines": {
+        "matmul_ms": 0.07253333727518717,
+        "mm_ms": 0.0722261349360148,
+        "cublas_ms": 0.07249813079833985,
+        "matmul_tflops": 59.21370031141887,
+        "mm_tflops": 59.46555633642746,
+        "cublas_tflops": 59.24245561512259,
+        "matmul_equals_mm": true,
+        "matmul_vs_mm_max_abs_diff": 0.0,
+        "matmul_vs_mm_mean_abs_diff": 0.0,
+        "cublas_close_vs_mm": true,
+        "cublas_vs_mm_max_abs_diff": 0.0,
+        "cublas_vs_mm_mean_abs_diff": 0.0
+      },
+      "results": [
+        {
+          "mode": "wmma",
+          "close_vs_torch_mm": true,
+          "max_abs_err_vs_torch_mm": 0.0,
+          "mean_abs_err_vs_torch_mm": 0.0,
+          "kernel_ms": 0.08911999861399332,
+          "kernel_tflops": 48.1930808213188,
+          "pct_of_torch_matmul_tflops": 81.38839587436688,
+          "pct_of_torch_mm_tflops": 81.0436894740639,
+          "latency_pct_of_torch_matmul": 122.86763847067638,
+          "latency_pct_of_torch_mm": 123.39023636381042,
+          "latency_pct_of_cublas": 122.92730534238008,
+          "speedup_vs_torch_matmul": 0.8138839587436689,
+          "speedup_vs_torch_mm": 0.8104368947406391,
+          "speedup_vs_cublas": 0.8134889129919313,
+          "pct_of_cublas_tflops": 81.34889129919311
+        },
+        {
+          "mode": "mma",
+          "close_vs_torch_mm": false,
+          "max_abs_err_vs_torch_mm": 92.1875,
+          "mean_abs_err_vs_torch_mm": 12.34375,
+          "kernel_ms": 0.5549055735270182,
+          "kernel_tflops": 7.739996678535577,
+          "pct_of_torch_matmul_tflops": 13.07129370032459,
+          "pct_of_torch_mm_tflops": 13.015932508469954,
+          "latency_pct_of_torch_matmul": 765.0352160438165,
+          "latency_pct_of_torch_mm": 768.2891712516661,
+          "latency_pct_of_cublas": 765.4067317549725,
+          "speedup_vs_torch_matmul": 0.1307129370032459,
+          "speedup_vs_torch_mm": 0.13015932508469955,
+          "speedup_vs_cublas": 0.1306494911152842,
+          "pct_of_cublas_tflops": 13.064949111528419
+        }
+      ]
+    },
+    {
+      "shape": {
+        "m": 16384,
+        "n": 1024,
+        "k": 256
+      },
+      "baselines": {
+        "matmul_ms": 0.15790079434712728,
+        "mm_ms": 0.1571839968363444,
+        "cublas_ms": 0.15766186714172364,
+        "matmul_tflops": 54.40083203834926,
+        "mm_tflops": 54.64891315204054,
+        "cublas_tflops": 54.483273271642986,
+        "matmul_equals_mm": true,
+        "matmul_vs_mm_max_abs_diff": 0.0,
+        "matmul_vs_mm_mean_abs_diff": 0.0,
+        "cublas_close_vs_mm": true,
+        "cublas_vs_mm_max_abs_diff": 0.0,
+        "cublas_vs_mm_mean_abs_diff": 0.0
+      },
+      "results": [
+        {
+          "mode": "wmma",
+          "close_vs_torch_mm": true,
+          "max_abs_err_vs_torch_mm": 0.0,
+          "mean_abs_err_vs_torch_mm": 0.0,
+          "kernel_ms": 0.30757548014322916,
+          "kernel_tflops": 27.92789135206718,
+          "pct_of_torch_matmul_tflops": 51.33725037951575,
+          "pct_of_torch_mm_tflops": 51.1042027027474,
+          "latency_pct_of_torch_matmul": 194.79033111578832,
+          "latency_pct_of_torch_mm": 195.67862271848716,
+          "latency_pct_of_cublas": 195.08552430547257,
+          "speedup_vs_torch_matmul": 0.5133725037951574,
+          "speedup_vs_torch_mm": 0.5110420270274739,
+          "speedup_vs_cublas": 0.5125956954315897,
+          "pct_of_cublas_tflops": 51.259569543158975
+        },
+        {
+          "mode": "mma",
+          "close_vs_torch_mm": false,
+          "max_abs_err_vs_torch_mm": 87.1875,
+          "mean_abs_err_vs_torch_mm": 11.1953125,
+          "kernel_ms": 0.8929279963175456,
+          "kernel_tflops": 9.61996334242523,
+          "pct_of_torch_matmul_tflops": 17.683485678387683,
+          "pct_of_torch_mm_tflops": 17.603210727469023,
+          "latency_pct_of_torch_matmul": 565.4993694044015,
+          "latency_pct_of_torch_mm": 568.0781849867562,
+          "latency_pct_of_cublas": 566.3563501470427,
+          "speedup_vs_torch_matmul": 0.17683485678387684,
+          "speedup_vs_torch_mm": 0.17603210727469024,
+          "speedup_vs_cublas": 0.17656727954765064,
+          "pct_of_cublas_tflops": 17.656727954765064
+        }
+      ]
+    },
+    {
+      "shape": {
+        "m": 32768,
+        "n": 1024,
+        "k": 256
+      },
+      "baselines": {
+        "matmul_ms": 0.34061654408772785,
+        "mm_ms": 0.35416746139526367,
+        "cublas_ms": 0.4035242716471354,
+        "matmul_tflops": 50.43756529798864,
+        "mm_tflops": 48.50775708281864,
+        "cublas_tflops": 42.5745621542762,
+        "matmul_equals_mm": true,
+        "matmul_vs_mm_max_abs_diff": 0.0,
+        "matmul_vs_mm_mean_abs_diff": 0.0,
+        "cublas_close_vs_mm": true,
+        "cublas_vs_mm_max_abs_diff": 0.0,
+        "cublas_vs_mm_mean_abs_diff": 0.0
+      },
+      "results": [
+        {
+          "mode": "wmma",
+          "close_vs_torch_mm": true,
+          "max_abs_err_vs_torch_mm": 0.0,
+          "mean_abs_err_vs_torch_mm": 0.0,
+          "kernel_ms": 0.6397269566853842,
+          "kernel_tflops": 26.855002754634597,
+          "pct_of_torch_matmul_tflops": 53.24405053252149,
+          "pct_of_torch_mm_tflops": 55.362285064601735,
+          "latency_pct_of_torch_matmul": 187.81441118744326,
+          "latency_pct_of_torch_mm": 180.62838245081633,
+          "latency_pct_of_cublas": 158.53493869751603,
+          "speedup_vs_torch_matmul": 0.5324405053252149,
+          "speedup_vs_torch_mm": 0.5536228506460174,
+          "speedup_vs_cublas": 0.6307757824336726,
+          "pct_of_cublas_tflops": 63.07757824336726
+        },
+        {
+          "mode": "mma",
+          "close_vs_torch_mm": false,
+          "max_abs_err_vs_torch_mm": 91.0625,
+          "mean_abs_err_vs_torch_mm": 11.8359375,
+          "kernel_ms": 1.459404754638672,
+          "kernel_tflops": 11.771833091124535,
+          "pct_of_torch_matmul_tflops": 23.339415813542402,
+          "pct_of_torch_mm_tflops": 24.26793939580871,
+          "latency_pct_of_torch_matmul": 428.45973866225165,
+          "latency_pct_of_torch_mm": 412.0663001872788,
+          "latency_pct_of_cublas": 361.6646772402475,
+          "speedup_vs_torch_matmul": 0.233394158135424,
+          "speedup_vs_torch_mm": 0.24267939395808708,
+          "speedup_vs_cublas": 0.27649921679681133,
+          "pct_of_cublas_tflops": 27.649921679681135
+        }
+      ]
+    }
+  ]
+}

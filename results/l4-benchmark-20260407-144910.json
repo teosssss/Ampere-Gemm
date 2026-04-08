@@ -1,0 +1,70 @@
+{
+  "timestamp": "2026-04-07 12:48:02",
+  "device": "NVIDIA L4",
+  "dtype": "float16",
+  "warmup": 15,
+  "iters": 40,
+  "kernel": "Bruce-Lee-LY wmma_async_stage3",
+  "cases": [
+    {
+      "shape": {
+        "m": 2048,
+        "n": 2048,
+        "k": 2048
+      },
+      "matmul_equals_mm": true,
+      "matmul_vs_mm_max_abs_diff": 0.0,
+      "kernel_close_vs_mm": false,
+      "kernel_max_abs_err_vs_mm": 1.625,
+      "kernel_mean_abs_err_vs_mm": 0.07452392578125,
+      "kernel_ms": 0.33873920440673827,
+      "matmul_ms": 0.2273792028427124,
+      "mm_ms": 0.2273792028427124,
+      "kernel_tflops": 50.717097284586565,
+      "matmul_tflops": 75.55602697703195,
+      "mm_tflops": 75.55602697703195,
+      "pct_of_torch_matmul_tflops": 67.12515111468726,
+      "pct_of_torch_mm_tflops": 67.12515111468726
+    },
+    {
+      "shape": {
+        "m": 4096,
+        "n": 4096,
+        "k": 4096
+      },
+      "matmul_equals_mm": true,
+      "matmul_vs_mm_max_abs_diff": 0.0,
+      "kernel_close_vs_mm": false,
+      "kernel_max_abs_err_vs_mm": 3.0,
+      "kernel_mean_abs_err_vs_mm": 0.1488037109375,
+      "kernel_ms": 3.0166271209716795,
+      "matmul_ms": 2.4911615371704103,
+      "mm_ms": 2.539980888366699,
+      "kernel_tflops": 45.56047133453134,
+      "matmul_tflops": 55.17063081670338,
+      "mm_tflops": 54.110231341298906,
+      "pct_of_torch_matmul_tflops": 82.58102301911241,
+      "pct_of_torch_mm_tflops": 84.19936526820561
+    },
+    {
+      "shape": {
+        "m": 8192,
+        "n": 8192,
+        "k": 8192
+      },
+      "matmul_equals_mm": true,
+      "matmul_vs_mm_max_abs_diff": 0.0,
+      "kernel_close_vs_mm": false,
+      "kernel_max_abs_err_vs_mm": 6.5,
+      "kernel_mean_abs_err_vs_mm": 0.29833984375,
+      "kernel_ms": 24.17400360107422,
+      "matmul_ms": 19.61976318359375,
+      "mm_ms": 19.536051940917968,
+      "kernel_tflops": 45.48322429004441,
+      "matmul_tflops": 56.04102442456712,
+      "mm_tflops": 56.28115809177849,
+      "pct_of_torch_matmul_tflops": 81.16058683271605,
+      "pct_of_torch_mm_tflops": 80.81430061526855
+    }
+  ]
+}

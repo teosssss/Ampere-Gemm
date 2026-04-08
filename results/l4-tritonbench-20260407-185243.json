@@ -1,0 +1,95 @@
+{
+  "timestamp": "2026-04-07 16:52:42",
+  "device": "NVIDIA L4",
+  "dtype": "float16",
+  "metrics": [
+    "latency",
+    "tflops",
+    "speedup",
+    "accuracy"
+  ],
+  "baseline": "torch_mm",
+  "cases": [
+    {
+      "shape": {
+        "m": 4096,
+        "n": 4096,
+        "k": 4096
+      },
+      "results": [
+        {
+          "backend": "torch_mm",
+          "latency_ms": 1.7838079929351807,
+          "tflops": 77.04806459906597,
+          "speedup_vs_baseline": null,
+          "accuracy_vs_baseline": null,
+          "error": null
+        },
+        {
+          "backend": "torch_matmul",
+          "latency_ms": 2.1964800357818604,
+          "tflops": 62.5723663466293,
+          "speedup_vs_baseline": 0.8121211956748859,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "cublas_gemm",
+          "latency_ms": 1.9937280416488647,
+          "tflops": 68.93565752244444,
+          "speedup_vs_baseline": 0.8947097877300885,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "wmma",
+          "latency_ms": 2.6501119136810303,
+          "tflops": 51.86156583142031,
+          "speedup_vs_baseline": 0.6731066653171845,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "mma",
+          "latency_ms": 3.0156800746917725,
+          "tflops": 45.5747791768155,
+          "speedup_vs_baseline": 0.5915110186605257,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256",
+          "latency_ms": 2.20467209815979,
+          "tflops": 62.339861599699304,
+          "speedup_vs_baseline": 0.8091035371763906,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256_mma",
+          "latency_ms": 3.1590399742126465,
+          "tflops": 43.5065572433141,
+          "speedup_vs_baseline": 0.5646677495367161,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256_colb",
+          "latency_ms": 2.8190720081329346,
+          "tflops": 48.75326102898149,
+          "speedup_vs_baseline": 0.6327642528424071,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256_colb_mma",
+          "latency_ms": 2.960383892059326,
+          "tflops": 46.42605772874734,
+          "speedup_vs_baseline": 0.6025596875188757,
+          "accuracy_vs_baseline": true,
+          "error": null
+        }
+      ]
+    }
+  ]
+}
