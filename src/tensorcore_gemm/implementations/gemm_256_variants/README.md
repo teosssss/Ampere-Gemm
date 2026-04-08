@@ -1,8 +1,8 @@
-# GEMM 256x128x32 Variants
+# GEMM Variants
 
 This project contains Tensor Core GEMM implementations optimized for Ampere / Ada Lovelace CUDA architectures, with the goal of closing as much of the gap to cuBLAS as possible on practical GEMM shapes.
 
-The focus here is the `256x128x32` family of kernels, using multi-stage shared-memory staging, register ping-pong, WMMA or inline MMA instructions, and alternative `B` operand layouts.
+The implementations here use multi-stage shared-memory staging, register ping-pong, WMMA or inline MMA instructions, and alternative `B` operand layouts.
 
 ## Project Structure
 
