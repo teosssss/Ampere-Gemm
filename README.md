@@ -19,20 +19,13 @@ The repo contains a PyTorch CUDA extension, TritonBench and Modal benchmark harn
 
 ## Kernel Variants
 
-- `reg_pingpong_256`
-- `reg_pingpong_256_mma`
-- `reg_pingpong_256_colb`
-- `reg_pingpong_256_colb_mma`
+`reg_pingpong_256`, `reg_pingpong_256_mma`, `reg_pingpong_256_colb`, `reg_pingpong_256_colb_mma`
 
-Implementation files:
-
+Files:
 - [src/tensorcore_gemm/reg_pingpong_256.cu](./src/tensorcore_gemm/reg_pingpong_256.cu)
 - [src/tensorcore_gemm/reg_pingpong_256_mma.cu](./src/tensorcore_gemm/reg_pingpong_256_mma.cu)
 - [src/tensorcore_gemm/reg_pingpong_256_colb.cu](./src/tensorcore_gemm/reg_pingpong_256_colb.cu)
 - [src/tensorcore_gemm/reg_pingpong_256_colb_mma.cu](./src/tensorcore_gemm/reg_pingpong_256_colb_mma.cu)
-
-Shared code:
-
 - [src/tensorcore_gemm/ptx_primitives.cuh](./src/tensorcore_gemm/ptx_primitives.cuh)
 - [src/tensorcore_gemm/gemm_256_common.cuh](./src/tensorcore_gemm/gemm_256_common.cuh)
 
