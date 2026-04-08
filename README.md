@@ -89,6 +89,14 @@ uv run modal run modal_runner.py --action tritonbench --cases 4096x4096x4096 --w
 
 ## Benchmark Summary
 
+The large-shape plot includes the custom kernels together with `torch_mm`, `torch_matmul`, and `cublas_gemm`.
+
+The baseline-relative plot compares every backend against `torch_mm` on each tested shape using `TFLOPS / torch_mm`.
+
+![Large-shape TFLOPS](./src/tensorcore_gemm/implementations/gemm_256_variants/plots/large_tflops.png)
+
+![Baseline-relative TFLOPS](./src/tensorcore_gemm/implementations/gemm_256_variants/plots/baseline_relative_tflops.png)
+
 K-means-like shapes on L4 (`results/l4-tritonbench-20260408-111218.json`):
 
 | Shape | torch_mm | 256 | 256_mma | 256_colb | 256_colb_mma |
@@ -107,19 +115,6 @@ Larger shapes on L4 (`results/l4-tritonbench-20260408-110716.json`):
 | `8192x8192x8192` | 59.28 | 54.14 | 37.67 | 43.39 | 40.52 |
 | `4096x8192x4096` | 66.48 | 57.38 | 39.11 | 44.38 | 44.79 |
 | `8192x4096x4096` | 57.32 | 59.77 | 39.09 | 52.08 | 50.52 |
-
-Plots:
-
-- [src/tensorcore_gemm/implementations/gemm_256_variants/plots/large_tflops.png](./src/tensorcore_gemm/implementations/gemm_256_variants/plots/large_tflops.png)
-- [src/tensorcore_gemm/implementations/gemm_256_variants/plots/baseline_relative_tflops.png](./src/tensorcore_gemm/implementations/gemm_256_variants/plots/baseline_relative_tflops.png)
-
-The large-shape plot includes the custom kernels together with `torch_mm`, `torch_matmul`, and `cublas_gemm`.
-
-The baseline-relative plot compares every backend against `torch_mm` on each tested shape using `TFLOPS / torch_mm`.
-
-![Large-shape TFLOPS](./src/tensorcore_gemm/implementations/gemm_256_variants/plots/large_tflops.png)
-
-![Baseline-relative TFLOPS](./src/tensorcore_gemm/implementations/gemm_256_variants/plots/baseline_relative_tflops.png)
 
 More detail:
 

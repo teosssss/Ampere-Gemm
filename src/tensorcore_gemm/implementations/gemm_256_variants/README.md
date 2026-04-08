@@ -30,6 +30,14 @@ The focus here is the `256x128x32` family of kernels, using multi-stage shared-m
 
 ## Benchmarks on Modal L4
 
+The large-shape plot includes the custom kernels together with `torch_mm`, `torch_matmul`, and `cublas_gemm`.
+
+The baseline-relative plot shows each backend as `TFLOPS / torch_mm` across the tested shapes, so values above `1.0` beat the baseline and values below `1.0` trail it.
+
+![Large-shape TFLOPS](./plots/large_tflops.png)
+
+![Baseline-relative TFLOPS](./plots/baseline_relative_tflops.png)
+
 Source JSONs:
 
 - `results/l4-tritonbench-20260408-111218.json` (k-means-like shapes)
@@ -62,19 +70,6 @@ From `results/l4-tritonbench-20260408-112823.json`:
 - Shape `16384x1024x256`
   - `reg_pingpong_256_colb`: `39.95`
   - `reg_pingpong_256_colb_mma`: `34.81`
-
-## Plots
-
-- `plots/large_tflops.png`
-- `plots/baseline_relative_tflops.png`
-
-The large-shape plot includes the custom kernels together with `torch_mm`, `torch_matmul`, and `cublas_gemm`.
-
-The baseline-relative plot shows each backend as `TFLOPS / torch_mm` across the tested shapes, so values above `1.0` beat the baseline and values below `1.0` trail it.
-
-![Large-shape TFLOPS](./plots/large_tflops.png)
-
-![Baseline-relative TFLOPS](./plots/baseline_relative_tflops.png)
 
 Regenerate:
 
