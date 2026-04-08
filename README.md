@@ -2,11 +2,7 @@
 
 Standalone CUDA Tensor Core GEMM experiments for Ampere-class GPUs, benchmarked on NVIDIA L4.
 
-The repo contains:
-
-- a runtime PyTorch extension under `src/tensorcore_gemm`
-- TritonBench and Modal benchmark harnesses
-- custom GEMM implementation files directly under `src/tensorcore_gemm`
+The repo contains a PyTorch CUDA extension, TritonBench and Modal benchmark harnesses, and custom GEMM kernels under `src/tensorcore_gemm`.
 
 ## Optimization Methods
 
@@ -39,54 +35,6 @@ Shared code:
 
 - [src/tensorcore_gemm/ptx_primitives.cuh](./src/tensorcore_gemm/ptx_primitives.cuh)
 - [src/tensorcore_gemm/gemm_256_common.cuh](./src/tensorcore_gemm/gemm_256_common.cuh)
-
-## Project Structure
-
-- `src/tensorcore_gemm/gemm.cu`: canonical CUDA source used by the runtime wrapper
-- `src/tensorcore_gemm/gemm.py`: Python API and mode dispatch
-- `src/tensorcore_gemm/cublas_gemm.cu`: cuBLAS comparison path
-- `src/tensorcore_gemm/reg_pingpong_256*.cu`: custom GEMM variant sources
-- `plots/`: generated benchmark figures
-- `benchmark_tritonbench.py`: TritonBench harness
-- `modal_runner.py`: Modal L4 runner
-- `results/`: saved benchmark outputs
-
-## Requirements
-
-- CUDA-capable NVIDIA GPU
-- Python 3.11
-- `uv`
-
-Optimized `reg_pingpong_256*` path constraints:
-
-- `torch.float16`
-- contiguous 2D inputs
-- `M % 256 == 0`
-- `N % 128 == 0`
-- `K % 32 == 0`
-- `K >= 64`
-
-Outside those constraints, the wrapper falls back to `torch.matmul`.
-
-## Build
-
-```bash
-uv sync --extra cuda --extra bench
-```
-
-## Run
-
-Local benchmark:
-
-```bash
-uv run python benchmark.py --m 4096 --n 4096 --k 4096
-```
-
-TritonBench on Modal L4:
-
-```bash
-uv run modal run modal_runner.py --action tritonbench --cases 4096x4096x4096 --warmup 20 --iters 50 --modes reg_pingpong_256,reg_pingpong_256_mma,reg_pingpong_256_colb,reg_pingpong_256_colb_mma
-```
 
 ## Benchmark Summary
 
@@ -122,3 +70,52 @@ Larger shapes on L4 (`results/l4-tritonbench-20260408-121605.json`):
 More detail:
 
 - [src/tensorcore_gemm/GEMM_VARIANTS.md](./src/tensorcore_gemm/GEMM_VARIANTS.md)
+
+## Quick Start
+
+Requirements:
+- CUDA-capable NVIDIA GPU
+- Python 3.11
+- `uv`
+
+Build:
+
+```bash
+uv sync --extra cuda --extra bench
+```
+
+Run local benchmark:
+
+```bash
+uv run python benchmark.py --m 4096 --n 4096 --k 4096
+```
+
+Run TritonBench on Modal L4:
+
+```bash
+uv run modal run modal_runner.py --action tritonbench --cases 4096x4096x4096 --warmup 20 --iters 50 --modes reg_pingpong_256,reg_pingpong_256_mma,reg_pingpong_256_colb,reg_pingpong_256_colb_mma
+```
+
+## Project Structure
+
+- `src/tensorcore_gemm/gemm.cu`: canonical CUDA source used by the runtime wrapper
+- `src/tensorcore_gemm/gemm.py`: Python API and mode dispatch
+- `src/tensorcore_gemm/cublas_gemm.cu`: cuBLAS reference path
+- `src/tensorcore_gemm/reg_pingpong_256*.cu`: custom GEMM kernels
+- `benchmark_tritonbench.py`: TritonBench harness
+- `modal_runner.py`: Modal runner for NVIDIA L4
+- `plots/`: generated figures
+- `results/`: saved benchmark outputs
+
+## Constraints
+
+The optimized `reg_pingpong_256*` path requires:
+
+- `torch.float16`
+- contiguous 2D inputs
+- `M % 256 == 0`
+- `N % 128 == 0`
+- `K % 32 == 0`
+- `K >= 64`
+
+Outside those constraints, the wrapper falls back to `torch.matmul`.
