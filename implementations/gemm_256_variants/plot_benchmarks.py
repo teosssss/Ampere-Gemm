@@ -67,11 +67,46 @@ def plot_file(payload: dict, title: str, out_path: Path) -> None:
     plt.close()
 
 
+def plot_vs_baseline(kmeans: dict, large: dict, out_path: Path) -> None:
+    fig, axes = plt.subplots(2, 1, figsize=(13, 8), sharey=True)
+
+    for ax, payload, title in [
+        (axes[0], kmeans, "K-means Shapes vs torch_mm"),
+        (axes[1], large, "Larger Shapes vs torch_mm"),
+    ]:
+        cases = payload["cases"]
+        labels = [shape_label(c["shape"]) for c in cases]
+        x = list(range(len(labels)))
+
+        for backend in BACKENDS[1:]:
+            vals = []
+            for case in cases:
+                case_map = to_map(case)
+                baseline = case_map["torch_mm"]
+                vals.append(case_map.get(backend, 0.0) / baseline if baseline else 0.0)
+            ax.plot(x, vals, marker="o", linewidth=2, label=backend, color=COLORS.get(backend))
+
+        ax.axhline(1.0, color="#4C78A8", linestyle="--", linewidth=1.5, label="torch_mm baseline")
+        ax.set_xticks(x)
+        ax.set_xticklabels(labels, rotation=15, ha="right")
+        ax.set_ylabel("TFLOPS / torch_mm")
+        ax.set_title(title)
+        ax.grid(axis="y", alpha=0.25)
+
+    handles, labels = axes[0].get_legend_handles_labels()
+    fig.legend(handles, labels, loc="upper center", ncol=3, fontsize=9)
+    fig.tight_layout(rect=(0, 0, 1, 0.95))
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(out_path, dpi=160)
+    plt.close(fig)
+
+
 def main() -> None:
     kmeans = load(KMEANS_FILE)
     large = load(LARGE_FILE)
     plot_file(kmeans, "L4 TritonBench: K-means Shapes", OUT_DIR / "kmeans_tflops.png")
     plot_file(large, "L4 TritonBench: Larger Shapes", OUT_DIR / "large_tflops.png")
+    plot_vs_baseline(kmeans, large, OUT_DIR / "baseline_relative_tflops.png")
 
 
 if __name__ == "__main__":

@@ -111,6 +111,9 @@ Plots:
 
 - [implementations/gemm_256_variants/plots/kmeans_tflops.png](./implementations/gemm_256_variants/plots/kmeans_tflops.png)
 - [implementations/gemm_256_variants/plots/large_tflops.png](./implementations/gemm_256_variants/plots/large_tflops.png)
+- [implementations/gemm_256_variants/plots/baseline_relative_tflops.png](./implementations/gemm_256_variants/plots/baseline_relative_tflops.png)
+
+The baseline-relative plot compares each kernel against `torch_mm` on every tested shape using `TFLOPS / torch_mm`.
 
 More detail:
 
