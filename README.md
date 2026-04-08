@@ -116,6 +116,12 @@ Plots:
 
 The baseline-relative plot compares each kernel against `torch_mm` on every tested shape using `TFLOPS / torch_mm`.
 
+![K-means TFLOPS](./src/tensorcore_gemm/implementations/gemm_256_variants/plots/kmeans_tflops.png)
+
+![Large-shape TFLOPS](./src/tensorcore_gemm/implementations/gemm_256_variants/plots/large_tflops.png)
+
+![Baseline-relative TFLOPS](./src/tensorcore_gemm/implementations/gemm_256_variants/plots/baseline_relative_tflops.png)
+
 More detail:
 
 - [src/tensorcore_gemm/implementations/gemm_256_variants/README.md](./src/tensorcore_gemm/implementations/gemm_256_variants/README.md)

@@ -70,6 +70,12 @@ From `results/l4-tritonbench-20260408-112823.json`:
 
 The baseline-relative plot shows each kernel as `TFLOPS / torch_mm` across the tested shapes, so values above `1.0` beat the baseline and values below `1.0` trail it.
 
+![K-means TFLOPS](./plots/kmeans_tflops.png)
+
+![Large-shape TFLOPS](./plots/large_tflops.png)
+
+![Baseline-relative TFLOPS](./plots/baseline_relative_tflops.png)
+
 Regenerate:
 
 ```bash
