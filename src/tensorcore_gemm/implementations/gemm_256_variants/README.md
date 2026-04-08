@@ -63,14 +63,6 @@ Source JSONs:
 | 4096x8192x4096 | 66.48 | 57.38 | 39.11 | 44.38 | 44.79 |
 | 8192x4096x4096 | 57.32 | 59.77 | 39.09 | 52.08 | 50.52 |
 
-### Post-change Spot Check for `_colb_mma` Epilogue
-
-From `results/l4-tritonbench-20260408-112823.json`:
-
-- Shape `16384x1024x256`
-  - `reg_pingpong_256_colb`: `39.95`
-  - `reg_pingpong_256_colb_mma`: `34.81`
-
 Regenerate:
 
 ```bash
