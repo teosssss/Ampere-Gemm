@@ -1,95 +1,125 @@
-# tensorcore-gemm
+# Ampere-Gemm
 
-Standalone CUDA Tensor Core GEMM repo with:
+Standalone CUDA Tensor Core GEMM experiments for Ampere-class GPUs, focused on a `256x128x32` tiled HGEMM path and benchmarked on NVIDIA L4.
 
-- a packaged PyTorch extension under `src/tensorcore_gemm`
-- Modal + TritonBench benchmarking harnesses
-- a clean snapshot of the 4 `256x128x32` implementation variants under `implementations/gemm_256_variants`
+The repo contains:
 
-## Repo Structure
+- a runtime PyTorch extension under `src/tensorcore_gemm`
+- TritonBench and Modal benchmark harnesses
+- a clean snapshot of the four main `256` variants under `implementations/gemm_256_variants`
 
-- [`src/tensorcore_gemm/gemm.cu`](./src/tensorcore_gemm/gemm.cu): canonical CUDA source used by the runtime wrapper
-- [`src/tensorcore_gemm/gemm.py`](./src/tensorcore_gemm/gemm.py): Python API and mode dispatch
-- [`src/tensorcore_gemm/cublas_gemm.cu`](./src/tensorcore_gemm/cublas_gemm.cu): cuBLAS comparison kernel
-- [`src/tensorcore_gemm/cuda_compile.py`](./src/tensorcore_gemm/cuda_compile.py): JIT compile helper
-- [`benchmark_tritonbench.py`](./benchmark_tritonbench.py): TritonBench harness
-- [`modal_runner.py`](./modal_runner.py): Modal L4 runner
-- [`implementations/gemm_256_variants`](./implementations/gemm_256_variants): commit-friendly extracted implementations and benchmark plots
+## Optimization Methods
 
-## Kernel Modes
+- CTA tiling: `256 x 128 x 32`
+- warp tiling: `64 x 64`
+- Tensor Core instruction shape: `16 x 8 x 16`
+- triple-buffered `cp.async` shared-memory staging
+- register ping-pong over the two `k_step=0/16` halves
+- shared-memory padding to reduce bank conflicts
+- swizzled CTA traversal
+- WMMA fragment path
+- low-level `ldmatrix` + `mma.sync` PTX path
+- optional pre-transposed / column-major `B` path
 
-Available runtime modes:
+## Kernel Variants
 
-- `wmma`
-- `mma`
 - `reg_pingpong_256`
 - `reg_pingpong_256_mma`
 - `reg_pingpong_256_colb`
 - `reg_pingpong_256_colb_mma`
 
-The `reg_pingpong_256*` kernels are the main optimized variants for the `256x128x32` tile family.
+Implementation snapshot:
 
-## Techniques Used
+- [implementations/gemm_256_variants/reg_pingpong_256.cu](./implementations/gemm_256_variants/reg_pingpong_256.cu)
+- [implementations/gemm_256_variants/reg_pingpong_256_mma.cu](./implementations/gemm_256_variants/reg_pingpong_256_mma.cu)
+- [implementations/gemm_256_variants/reg_pingpong_256_colb.cu](./implementations/gemm_256_variants/reg_pingpong_256_colb.cu)
+- [implementations/gemm_256_variants/reg_pingpong_256_colb_mma.cu](./implementations/gemm_256_variants/reg_pingpong_256_colb_mma.cu)
 
-- CTA tile `256x128`, warp tile `64x64`
-- triple-buffered `cp.async` staging on `K_TILE=32`
-- register ping-pong between the two `k_step=0/16` halves
-- shared-memory padding to reduce bank conflicts
-- swizzled CTA traversal
-- WMMA fragment path for the higher-level kernels
-- `ldmatrix` + `mma.sync` PTX path for the lower-level MMA kernels
-- optional pre-transposed / column-major `B` path for better operand layout
+Shared code:
 
-## Implementation Snapshot
+- [implementations/gemm_256_variants/ptx_primitives.cuh](./implementations/gemm_256_variants/ptx_primitives.cuh)
+- [implementations/gemm_256_variants/gemm_256_common.cuh](./implementations/gemm_256_variants/gemm_256_common.cuh)
 
-The extracted implementations are here:
+## Project Structure
 
-- [`implementations/gemm_256_variants/reg_pingpong_256.cu`](./implementations/gemm_256_variants/reg_pingpong_256.cu)
-- [`implementations/gemm_256_variants/reg_pingpong_256_mma.cu`](./implementations/gemm_256_variants/reg_pingpong_256_mma.cu)
-- [`implementations/gemm_256_variants/reg_pingpong_256_colb.cu`](./implementations/gemm_256_variants/reg_pingpong_256_colb.cu)
-- [`implementations/gemm_256_variants/reg_pingpong_256_colb_mma.cu`](./implementations/gemm_256_variants/reg_pingpong_256_colb_mma.cu)
+- `src/tensorcore_gemm/gemm.cu`: canonical CUDA source used by the runtime wrapper
+- `src/tensorcore_gemm/gemm.py`: Python API and mode dispatch
+- `src/tensorcore_gemm/cublas_gemm.cu`: cuBLAS comparison path
+- `benchmark_tritonbench.py`: TritonBench harness
+- `modal_runner.py`: Modal L4 runner
+- `results/`: saved benchmark outputs
 
-Shared pieces:
+## Requirements
 
-- [`implementations/gemm_256_variants/ptx_primitives.cuh`](./implementations/gemm_256_variants/ptx_primitives.cuh)
-- [`implementations/gemm_256_variants/gemm_256_common.cuh`](./implementations/gemm_256_variants/gemm_256_common.cuh)
-- [`implementations/gemm_256_variants/README.md`](./implementations/gemm_256_variants/README.md)
+- CUDA-capable NVIDIA GPU
+- Python 3.11
+- `uv`
 
-## Constraints
-
-For the optimized `reg_pingpong_256*` path, the wrapper expects:
+Optimized `reg_pingpong_256*` path constraints:
 
 - `torch.float16`
-- 2D contiguous inputs
+- contiguous 2D inputs
 - `M % 256 == 0`
 - `N % 128 == 0`
 - `K % 32 == 0`
 - `K >= 64`
 
-Outside those constraints, the Python wrapper falls back to `torch.matmul`.
+Outside those constraints, the wrapper falls back to `torch.matmul`.
 
-## Local Usage
+## Build
 
 ```bash
 uv sync --extra cuda --extra bench
+```
+
+## Run
+
+Local benchmark:
+
+```bash
 uv run python benchmark.py --m 4096 --n 4096 --k 4096
 ```
 
-## TritonBench on Modal L4
+TritonBench on Modal L4:
 
 ```bash
 uv run modal run modal_runner.py --action tritonbench --cases 4096x4096x4096 --warmup 20 --iters 50 --modes reg_pingpong_256,reg_pingpong_256_mma,reg_pingpong_256_colb,reg_pingpong_256_colb_mma
 ```
 
-This stages the repo into Modal, runs the selected kernels on an NVIDIA L4, and saves the JSON summary in `results/`.
+## Benchmark Summary
 
-## Benchmarks
+K-means-like shapes on L4 (`results/l4-tritonbench-20260408-111218.json`):
 
-The concise benchmark tables and plots for the 4 `256` variants live in:
+| Shape | torch_mm | 256 | 256_mma | 256_colb | 256_colb_mma |
+|---|---:|---:|---:|---:|---:|
+| `16384x256x256` | 25.58 | 22.31 | 14.77 | 21.40 | 16.64 |
+| `16384x512x256` | 36.16 | 33.55 | 20.07 | 33.03 | 23.83 |
+| `16384x1024x256` | 44.86 | 41.53 | 23.56 | 40.33 | 27.32 |
+| `32768x1024x256` | 45.71 | 43.69 | 22.70 | 42.58 | 27.55 |
 
-- [`implementations/gemm_256_variants/README.md`](./implementations/gemm_256_variants/README.md)
+Larger shapes on L4 (`results/l4-tritonbench-20260408-110716.json`):
 
-Generated plots:
+| Shape | torch_mm | 256 | 256_mma | 256_colb | 256_colb_mma |
+|---|---:|---:|---:|---:|---:|
+| `2048x2048x2048` | 63.07 | 57.26 | 32.96 | 39.95 | 36.00 |
+| `4096x4096x4096` | 59.34 | 63.22 | 37.85 | 45.12 | 46.49 |
+| `8192x8192x8192` | 59.28 | 54.14 | 37.67 | 43.39 | 40.52 |
+| `4096x8192x4096` | 66.48 | 57.38 | 39.11 | 44.38 | 44.79 |
+| `8192x4096x4096` | 57.32 | 59.77 | 39.09 | 52.08 | 50.52 |
 
-- [`implementations/gemm_256_variants/plots/kmeans_tflops.png`](./implementations/gemm_256_variants/plots/kmeans_tflops.png)
-- [`implementations/gemm_256_variants/plots/large_tflops.png`](./implementations/gemm_256_variants/plots/large_tflops.png)
+Plots:
+
+- [implementations/gemm_256_variants/plots/kmeans_tflops.png](./implementations/gemm_256_variants/plots/kmeans_tflops.png)
+- [implementations/gemm_256_variants/plots/large_tflops.png](./implementations/gemm_256_variants/plots/large_tflops.png)
+
+More detail:
+
+- [implementations/gemm_256_variants/README.md](./implementations/gemm_256_variants/README.md)
+- [REG_PINGPONG_256_COMPARISON.md](./REG_PINGPONG_256_COMPARISON.md)
+
+## Reference
+
+This repo is stylistically inspired by Bruce-Lee-LY's CUDA HGEMM work and the associated Tensor Core optimization write-up:
+
+- https://github.com/Bruce-Lee-LY/cuda_hgemm
+- https://bruce-lee-ly.medium.com/nvidia-tensor-core-cuda-hgemm-advanced-optimization-5a17eb77dd85
