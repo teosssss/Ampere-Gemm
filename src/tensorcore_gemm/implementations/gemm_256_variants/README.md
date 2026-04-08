@@ -1,4 +1,4 @@
-# GEMM 256x128x32 Variants (Snapshot)
+# GEMM 256x128x32 Variants
 
 This folder contains a clean snapshot of the 4 tested kernels from `gemm.cu`, split one implementation per file:
 
