@@ -6,7 +6,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[4]
 RESULTS = ROOT / "results"
 OUT_DIR = Path(__file__).resolve().parent / "plots"
 

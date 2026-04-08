@@ -6,7 +6,7 @@ The repo contains:
 
 - a runtime PyTorch extension under `src/tensorcore_gemm`
 - TritonBench and Modal benchmark harnesses
-- a clean snapshot of the four main `256` variants under `implementations/gemm_256_variants`
+- a clean snapshot of the four main `256` variants under `src/tensorcore_gemm/implementations/gemm_256_variants`
 
 ## Optimization Methods
 
@@ -30,21 +30,22 @@ The repo contains:
 
 Implementation snapshot:
 
-- [implementations/gemm_256_variants/reg_pingpong_256.cu](./implementations/gemm_256_variants/reg_pingpong_256.cu)
-- [implementations/gemm_256_variants/reg_pingpong_256_mma.cu](./implementations/gemm_256_variants/reg_pingpong_256_mma.cu)
-- [implementations/gemm_256_variants/reg_pingpong_256_colb.cu](./implementations/gemm_256_variants/reg_pingpong_256_colb.cu)
-- [implementations/gemm_256_variants/reg_pingpong_256_colb_mma.cu](./implementations/gemm_256_variants/reg_pingpong_256_colb_mma.cu)
+- [src/tensorcore_gemm/implementations/gemm_256_variants/reg_pingpong_256.cu](./src/tensorcore_gemm/implementations/gemm_256_variants/reg_pingpong_256.cu)
+- [src/tensorcore_gemm/implementations/gemm_256_variants/reg_pingpong_256_mma.cu](./src/tensorcore_gemm/implementations/gemm_256_variants/reg_pingpong_256_mma.cu)
+- [src/tensorcore_gemm/implementations/gemm_256_variants/reg_pingpong_256_colb.cu](./src/tensorcore_gemm/implementations/gemm_256_variants/reg_pingpong_256_colb.cu)
+- [src/tensorcore_gemm/implementations/gemm_256_variants/reg_pingpong_256_colb_mma.cu](./src/tensorcore_gemm/implementations/gemm_256_variants/reg_pingpong_256_colb_mma.cu)
 
 Shared code:
 
-- [implementations/gemm_256_variants/ptx_primitives.cuh](./implementations/gemm_256_variants/ptx_primitives.cuh)
-- [implementations/gemm_256_variants/gemm_256_common.cuh](./implementations/gemm_256_variants/gemm_256_common.cuh)
+- [src/tensorcore_gemm/implementations/gemm_256_variants/ptx_primitives.cuh](./src/tensorcore_gemm/implementations/gemm_256_variants/ptx_primitives.cuh)
+- [src/tensorcore_gemm/implementations/gemm_256_variants/gemm_256_common.cuh](./src/tensorcore_gemm/implementations/gemm_256_variants/gemm_256_common.cuh)
 
 ## Project Structure
 
 - `src/tensorcore_gemm/gemm.cu`: canonical CUDA source used by the runtime wrapper
 - `src/tensorcore_gemm/gemm.py`: Python API and mode dispatch
 - `src/tensorcore_gemm/cublas_gemm.cu`: cuBLAS comparison path
+- `src/tensorcore_gemm/implementations/gemm_256_variants/`: extracted variant implementations
 - `benchmark_tritonbench.py`: TritonBench harness
 - `modal_runner.py`: Modal L4 runner
 - `results/`: saved benchmark outputs
@@ -109,15 +110,15 @@ Larger shapes on L4 (`results/l4-tritonbench-20260408-110716.json`):
 
 Plots:
 
-- [implementations/gemm_256_variants/plots/kmeans_tflops.png](./implementations/gemm_256_variants/plots/kmeans_tflops.png)
-- [implementations/gemm_256_variants/plots/large_tflops.png](./implementations/gemm_256_variants/plots/large_tflops.png)
-- [implementations/gemm_256_variants/plots/baseline_relative_tflops.png](./implementations/gemm_256_variants/plots/baseline_relative_tflops.png)
+- [src/tensorcore_gemm/implementations/gemm_256_variants/plots/kmeans_tflops.png](./src/tensorcore_gemm/implementations/gemm_256_variants/plots/kmeans_tflops.png)
+- [src/tensorcore_gemm/implementations/gemm_256_variants/plots/large_tflops.png](./src/tensorcore_gemm/implementations/gemm_256_variants/plots/large_tflops.png)
+- [src/tensorcore_gemm/implementations/gemm_256_variants/plots/baseline_relative_tflops.png](./src/tensorcore_gemm/implementations/gemm_256_variants/plots/baseline_relative_tflops.png)
 
 The baseline-relative plot compares each kernel against `torch_mm` on every tested shape using `TFLOPS / torch_mm`.
 
 More detail:
 
-- [implementations/gemm_256_variants/README.md](./implementations/gemm_256_variants/README.md)
+- [src/tensorcore_gemm/implementations/gemm_256_variants/README.md](./src/tensorcore_gemm/implementations/gemm_256_variants/README.md)
 - [REG_PINGPONG_256_COMPARISON.md](./REG_PINGPONG_256_COMPARISON.md)
 
 ## Reference

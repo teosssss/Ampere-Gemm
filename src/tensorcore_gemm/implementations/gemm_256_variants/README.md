@@ -73,5 +73,5 @@ The baseline-relative plot shows each kernel as `TFLOPS / torch_mm` across the t
 Regenerate:
 
 ```bash
-python implementations/gemm_256_variants/plot_benchmarks.py
+python src/tensorcore_gemm/implementations/gemm_256_variants/plot_benchmarks.py
 ```
