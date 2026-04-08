@@ -30,13 +30,13 @@ The implementations here use multi-stage shared-memory staging, register ping-po
 
 ## Benchmarks on Modal L4
 
-The large-shape plot includes the custom kernels together with `torch_mm`, `torch_matmul`, and `cublas_gemm`.
+The main plot includes the larger shapes together with two mid-size points around `4096`, alongside `torch_mm`, `torch_matmul`, and `cublas_gemm`.
 
 The baseline-relative plot shows each backend as `TFLOPS / torch_mm` across the tested shapes, so values above `1.0` beat the baseline and values below `1.0` trail it.
 
 The `colb` variants are measured with `B` pretransposed, so these figures isolate kernel runtime instead of layout conversion cost.
 
-![Large-shape TFLOPS](../../plots/large_tflops.png)
+![Selected-shape TFLOPS](../../plots/large_tflops.png)
 
 ![Baseline-relative TFLOPS](../../plots/baseline_relative_tflops.png)
 

@@ -31,13 +31,13 @@ Files:
 
 ## Benchmark Summary
 
-The large-shape plot includes the custom kernels together with `torch_mm`, `torch_matmul`, and `cublas_gemm`.
+The main plot includes the larger shapes together with two mid-size points around `4096`, alongside `torch_mm`, `torch_matmul`, and `cublas_gemm`.
 
 The baseline-relative plot compares every backend against `torch_mm` on each tested shape using `TFLOPS / torch_mm`.
 
 The `colb` variants are benchmarked with `B` pretransposed so the plots measure kernel runtime instead of transpose overhead.
 
-![Large-shape TFLOPS](./plots/large_tflops.png)
+![Selected-shape TFLOPS](./plots/large_tflops.png)
 
 ![Baseline-relative TFLOPS](./plots/baseline_relative_tflops.png)
 

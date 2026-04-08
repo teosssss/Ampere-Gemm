@@ -12,6 +12,7 @@ OUT_DIR = ROOT / "plots"
 
 KMEANS_FILE = RESULTS / "l4-tritonbench-20260408-121555.json"
 LARGE_FILE = RESULTS / "l4-tritonbench-20260408-121605.json"
+MID_FILE = RESULTS / "l4-tritonbench-20260408-123330.json"
 
 BACKENDS = [
     "torch_mm",
@@ -45,6 +46,12 @@ def shape_label(shape: dict) -> str:
 
 def to_map(case: dict) -> dict:
     return {r["backend"]: r["tflops"] for r in case["results"] if r.get("tflops") is not None}
+
+
+def select_cases(payload: dict, labels: list[str]) -> dict:
+    wanted = set(labels)
+    cases = [case for case in payload["cases"] if shape_label(case["shape"]) in wanted]
+    return {**payload, "cases": cases}
 
 
 def plot_file(payload: dict, title: str, out_path: Path) -> None:
@@ -108,8 +115,28 @@ def plot_vs_baseline(kmeans: dict, large: dict, out_path: Path) -> None:
 def main() -> None:
     kmeans = load(KMEANS_FILE)
     large = load(LARGE_FILE)
-    plot_file(large, "L4 TritonBench: Larger Shapes", OUT_DIR / "large_tflops.png")
-    plot_vs_baseline(kmeans, large, OUT_DIR / "baseline_relative_tflops.png")
+    mid = load(MID_FILE)
+
+    expanded_large = {
+        **large,
+        "cases": [
+            select_cases(mid, ["3584x3584x3584"])["cases"][0],
+            *large["cases"],
+            select_cases(mid, ["5120x5120x5120"])["cases"][0],
+        ],
+    }
+
+    expanded_relative = {
+        **large,
+        "cases": [
+            select_cases(mid, ["3584x3584x3584"])["cases"][0],
+            *large["cases"],
+            select_cases(mid, ["5120x5120x5120"])["cases"][0],
+        ],
+    }
+
+    plot_file(expanded_large, "L4 TritonBench: Selected Shapes", OUT_DIR / "large_tflops.png")
+    plot_vs_baseline(kmeans, expanded_relative, OUT_DIR / "baseline_relative_tflops.png")
 
 
 if __name__ == "__main__":

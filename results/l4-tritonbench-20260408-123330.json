@@ -1,0 +1,404 @@
+{
+  "timestamp": "2026-04-08 10:33:29",
+  "device": "NVIDIA L4",
+  "dtype": "float16",
+  "metrics": [
+    "latency",
+    "tflops",
+    "speedup",
+    "accuracy"
+  ],
+  "baseline": "torch_mm",
+  "cases": [
+    {
+      "shape": {
+        "m": 3072,
+        "n": 3072,
+        "k": 3072
+      },
+      "results": [
+        {
+          "backend": "torch_mm",
+          "latency_ms": 0.7649279832839966,
+          "tflops": 75.80067635527053,
+          "speedup_vs_baseline": null,
+          "accuracy_vs_baseline": null,
+          "error": null
+        },
+        {
+          "backend": "torch_matmul",
+          "latency_ms": 0.8704000115394592,
+          "tflops": 66.61541558742431,
+          "speedup_vs_baseline": 0.8788234985556626,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "cublas_gemm",
+          "latency_ms": 0.8253440260887146,
+          "tflops": 70.25198785381119,
+          "speedup_vs_baseline": 0.9267989578951359,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256",
+          "latency_ms": 0.7618560194969177,
+          "tflops": 76.10632063298226,
+          "speedup_vs_baseline": 1.0040322104288253,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256_mma",
+          "latency_ms": 1.4847999811172485,
+          "tflops": 39.05041704834275,
+          "speedup_vs_baseline": 0.5151724090866575,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256_colb",
+          "latency_ms": 0.8611840009689331,
+          "tflops": 67.32830432377213,
+          "speedup_vs_baseline": 0.8882282792334307,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256_colb_mma",
+          "latency_ms": 0.9041919708251953,
+          "tflops": 64.12582766365827,
+          "speedup_vs_baseline": 0.8459796237583245,
+          "accuracy_vs_baseline": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "shape": {
+        "m": 3584,
+        "n": 3584,
+        "k": 3584
+      },
+      "results": [
+        {
+          "backend": "torch_mm",
+          "latency_ms": 1.4950400590896606,
+          "tflops": 61.585882497398806,
+          "speedup_vs_baseline": null,
+          "accuracy_vs_baseline": null,
+          "error": null
+        },
+        {
+          "backend": "torch_matmul",
+          "latency_ms": 1.4981119632720947,
+          "tflops": 61.4595995928758,
+          "speedup_vs_baseline": 0.99794948291066,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "cublas_gemm",
+          "latency_ms": 1.5943679809570312,
+          "tflops": 57.74912849964052,
+          "speedup_vs_baseline": 0.9377007547481302,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256",
+          "latency_ms": 1.5421439409255981,
+          "tflops": 59.704777851500275,
+          "speedup_vs_baseline": 0.9694555867413611,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256_mma",
+          "latency_ms": 2.5425920486450195,
+          "tflops": 36.21240043485037,
+          "speedup_vs_baseline": 0.5879984010358197,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256_colb",
+          "latency_ms": 1.44486403465271,
+          "tflops": 63.72458528952927,
+          "speedup_vs_baseline": 1.034727159949698,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256_colb_mma",
+          "latency_ms": 1.521664023399353,
+          "tflops": 60.50833823507951,
+          "speedup_vs_baseline": 0.982503388461393,
+          "accuracy_vs_baseline": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "shape": {
+        "m": 4096,
+        "n": 4096,
+        "k": 4096
+      },
+      "results": [
+        {
+          "backend": "torch_mm",
+          "latency_ms": 2.314239978790283,
+          "tflops": 59.388375765525886,
+          "speedup_vs_baseline": null,
+          "accuracy_vs_baseline": null,
+          "error": null
+        },
+        {
+          "backend": "torch_matmul",
+          "latency_ms": 2.37772798538208,
+          "tflops": 57.80263945958258,
+          "speedup_vs_baseline": 0.9732988773391609,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "cublas_gemm",
+          "latency_ms": 2.3787519931793213,
+          "tflops": 57.77775651521618,
+          "speedup_vs_baseline": 0.972879890558572,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256",
+          "latency_ms": 2.4494080543518066,
+          "tflops": 56.11108905591104,
+          "speedup_vs_baseline": 0.9448160238873333,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256_mma",
+          "latency_ms": 3.5788800716400146,
+          "tflops": 38.4027826361387,
+          "speedup_vs_baseline": 0.6466380354929824,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256_colb",
+          "latency_ms": 2.3541760444641113,
+          "tflops": 58.380915817740245,
+          "speedup_vs_baseline": 0.9830360750769941,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256_colb_mma",
+          "latency_ms": 2.2722558975219727,
+          "tflops": 60.48568456655133,
+          "speedup_vs_baseline": 1.018476827946226,
+          "accuracy_vs_baseline": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "shape": {
+        "m": 4608,
+        "n": 4608,
+        "k": 4608
+      },
+      "results": [
+        {
+          "backend": "torch_mm",
+          "latency_ms": 3.5686399936676025,
+          "tflops": 54.835861216385645,
+          "speedup_vs_baseline": null,
+          "accuracy_vs_baseline": null,
+          "error": null
+        },
+        {
+          "backend": "torch_matmul",
+          "latency_ms": 3.56659197807312,
+          "tflops": 54.86734917452565,
+          "speedup_vs_baseline": 1.0005742220043878,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "cublas_gemm",
+          "latency_ms": 3.84716796875,
+          "tflops": 50.86584443766366,
+          "speedup_vs_baseline": 0.9276018158435397,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256",
+          "latency_ms": 3.6413440704345703,
+          "tflops": 53.740993336190215,
+          "speedup_vs_baseline": 0.9800337250859431,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256_mma",
+          "latency_ms": 5.1763200759887695,
+          "tflops": 37.80474247172975,
+          "speedup_vs_baseline": 0.6894164080427211,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256_colb",
+          "latency_ms": 3.441663980484009,
+          "tflops": 56.85896372616823,
+          "speedup_vs_baseline": 1.036893785652409,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256_colb_mma",
+          "latency_ms": 3.443711996078491,
+          "tflops": 56.82514903883958,
+          "speedup_vs_baseline": 1.0362771328529716,
+          "accuracy_vs_baseline": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "shape": {
+        "m": 5120,
+        "n": 5120,
+        "k": 5120
+      },
+      "results": [
+        {
+          "backend": "torch_mm",
+          "latency_ms": 5.007359981536865,
+          "tflops": 53.608180156764256,
+          "speedup_vs_baseline": null,
+          "accuracy_vs_baseline": null,
+          "error": null
+        },
+        {
+          "backend": "torch_matmul",
+          "latency_ms": 5.321728229522705,
+          "tflops": 50.44140632940127,
+          "speedup_vs_baseline": 0.9409274140979509,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "cublas_gemm",
+          "latency_ms": 5.40774393081665,
+          "tflops": 49.639084141963465,
+          "speedup_vs_baseline": 0.9259610006682915,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256",
+          "latency_ms": 4.6387200355529785,
+          "tflops": 57.86843222755521,
+          "speedup_vs_baseline": 1.0794701864217897,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256_mma",
+          "latency_ms": 6.906879901885986,
+          "tflops": 38.8649375424497,
+          "speedup_vs_baseline": 0.7249814753792896,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256_colb",
+          "latency_ms": 4.679679870605469,
+          "tflops": 57.36192718782473,
+          "speedup_vs_baseline": 1.0700219074791115,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256_colb_mma",
+          "latency_ms": 4.625408172607422,
+          "tflops": 58.034976802637146,
+          "speedup_vs_baseline": 1.0825768872013148,
+          "accuracy_vs_baseline": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "shape": {
+        "m": 6144,
+        "n": 6144,
+        "k": 6144
+      },
+      "results": [
+        {
+          "backend": "torch_mm",
+          "latency_ms": 7.311359882354736,
+          "tflops": 63.44325480236214,
+          "speedup_vs_baseline": null,
+          "accuracy_vs_baseline": null,
+          "error": null
+        },
+        {
+          "backend": "torch_matmul",
+          "latency_ms": 7.8837761878967285,
+          "tflops": 58.83683870682659,
+          "speedup_vs_baseline": 0.92739313091856,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "cublas_gemm",
+          "latency_ms": 8.00051212310791,
+          "tflops": 57.97834698959352,
+          "speedup_vs_baseline": 0.9138614840964127,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256",
+          "latency_ms": 8.365056037902832,
+          "tflops": 55.451686858548705,
+          "speedup_vs_baseline": 0.8740359716929926,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256_mma",
+          "latency_ms": 11.820032119750977,
+          "tflops": 39.243249364179604,
+          "speedup_vs_baseline": 0.6185566848111722,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256_colb",
+          "latency_ms": 8.359935760498047,
+          "tflops": 55.48564980125703,
+          "speedup_vs_baseline": 0.874571299566919,
+          "accuracy_vs_baseline": true,
+          "error": null
+        },
+        {
+          "backend": "reg_pingpong_256_colb_mma",
+          "latency_ms": 8.669183731079102,
+          "tflops": 53.50636027069889,
+          "speedup_vs_baseline": 0.8433735065671114,
+          "accuracy_vs_baseline": true,
+          "error": null
+        }
+      ]
+    }
+  ]
+}
