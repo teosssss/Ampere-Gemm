@@ -1,19 +1,22 @@
 # GEMM 256x128x32 Variants
 
-This folder contains a clean snapshot of the 4 tested kernels from `gemm.cu`, split one implementation per file:
+This project contains Tensor Core GEMM implementations optimized for Ampere / Ada Lovelace CUDA architectures, with the goal of closing as much of the gap to cuBLAS as possible on practical GEMM shapes.
 
-- `reg_pingpong_256.cu`
-- `reg_pingpong_256_mma.cu`
-- `reg_pingpong_256_colb.cu`
-- `reg_pingpong_256_colb_mma.cu`
+The focus here is the `256x128x32` family of kernels, using multi-stage shared-memory staging, register ping-pong, WMMA or inline MMA instructions, and alternative `B` operand layouts.
 
-Shared low-level PTX macros and async-copy primitives are isolated in:
+## Project Structure
 
-- `ptx_primitives.cuh`
+- Main implementations:
+  - `reg_pingpong_256.cu`
+  - `reg_pingpong_256_mma.cu`
+  - `reg_pingpong_256_colb.cu`
+  - `reg_pingpong_256_colb_mma.cu`
 
-Shared helper routines (prefetch, fragment load/compute, stage rotation) are in:
+- Shared PTX macros and async-copy primitives:
+  - `ptx_primitives.cuh`
 
-- `gemm_256_common.cuh`
+- Shared helpers:
+  - `gemm_256_common.cuh`
 
 ## Techniques Used (Short)
 
