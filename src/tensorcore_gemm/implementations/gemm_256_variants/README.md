@@ -11,26 +11,24 @@ The focus here is the `256x128x32` family of kernels, using multi-stage shared-m
   - `reg_pingpong_256_mma.cu`
   - `reg_pingpong_256_colb.cu`
   - `reg_pingpong_256_colb_mma.cu`
-
 - Shared PTX macros and async-copy primitives:
   - `ptx_primitives.cuh`
-
 - Shared helpers:
   - `gemm_256_common.cuh`
 
-## Techniques Used (Short)
+## Techniques Used
 
 - Triple-buffered `cp.async` staging over `K_TILE=32`.
 - CTA tile `256x128`, warp tile `64x64`.
 - Register ping-pong over two 16-wide WMMA halves (`k_step=0/16`).
 - Two B-layout families:
-  - row-major B (`reg_pingpong_256`, `reg_pingpong_256_mma`)
-  - pre-transposed/col-major B (`reg_pingpong_256_colb`, `reg_pingpong_256_colb_mma`)
+  - row-major B for `reg_pingpong_256` and `reg_pingpong_256_mma`
+  - pre-transposed col-major B for `reg_pingpong_256_colb` and `reg_pingpong_256_colb_mma`
 - Two math backbones:
   - WMMA fragment API
-  - inline PTX `ldmatrix` + `mma.sync` (`*_mma`)
+  - inline PTX `ldmatrix` + `mma.sync` for the `*_mma` variants
 
-## Benchmarks vs Baseline (`torch_mm`, Modal L4)
+## Benchmarks on Modal L4
 
 Source JSONs:
 
@@ -57,7 +55,7 @@ Source JSONs:
 | 4096x8192x4096 | 66.48 | 57.38 | 39.11 | 44.38 | 44.79 |
 | 8192x4096x4096 | 57.32 | 59.77 | 39.09 | 52.08 | 50.52 |
 
-### Post-Change Spot Check (`_colb_mma` epilogue)
+### Post-change Spot Check for `_colb_mma` Epilogue
 
 From `results/l4-tritonbench-20260408-112823.json`:
 
@@ -67,13 +65,12 @@ From `results/l4-tritonbench-20260408-112823.json`:
 
 ## Plots
 
-- `plots/kmeans_tflops.png`
 - `plots/large_tflops.png`
 - `plots/baseline_relative_tflops.png`
 
-The baseline-relative plot shows each kernel as `TFLOPS / torch_mm` across the tested shapes, so values above `1.0` beat the baseline and values below `1.0` trail it.
+The large-shape plot includes the custom kernels together with `torch_mm`, `torch_matmul`, and `cublas_gemm`.
 
-![K-means TFLOPS](./plots/kmeans_tflops.png)
+The baseline-relative plot shows each backend as `TFLOPS / torch_mm` across the tested shapes, so values above `1.0` beat the baseline and values below `1.0` trail it.
 
 ![Large-shape TFLOPS](./plots/large_tflops.png)
 
