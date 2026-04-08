@@ -1,12 +1,12 @@
 # Ampere-Gemm
 
-Standalone CUDA Tensor Core GEMM experiments for Ampere-class GPUs, focused on a `256x128x32` tiled HGEMM path and benchmarked on NVIDIA L4.
+Standalone CUDA Tensor Core GEMM experiments for Ampere-class GPUs, benchmarked on NVIDIA L4.
 
 The repo contains:
 
 - a runtime PyTorch extension under `src/tensorcore_gemm`
 - TritonBench and Modal benchmark harnesses
-- a clean snapshot of the four main `256` variants under `src/tensorcore_gemm/implementations/gemm_256_variants`
+- custom GEMM implementation files directly under `src/tensorcore_gemm`
 
 ## Optimization Methods
 
@@ -28,24 +28,25 @@ The repo contains:
 - `reg_pingpong_256_colb`
 - `reg_pingpong_256_colb_mma`
 
-Implementation snapshot:
+Implementation files:
 
-- [src/tensorcore_gemm/implementations/gemm_256_variants/reg_pingpong_256.cu](./src/tensorcore_gemm/implementations/gemm_256_variants/reg_pingpong_256.cu)
-- [src/tensorcore_gemm/implementations/gemm_256_variants/reg_pingpong_256_mma.cu](./src/tensorcore_gemm/implementations/gemm_256_variants/reg_pingpong_256_mma.cu)
-- [src/tensorcore_gemm/implementations/gemm_256_variants/reg_pingpong_256_colb.cu](./src/tensorcore_gemm/implementations/gemm_256_variants/reg_pingpong_256_colb.cu)
-- [src/tensorcore_gemm/implementations/gemm_256_variants/reg_pingpong_256_colb_mma.cu](./src/tensorcore_gemm/implementations/gemm_256_variants/reg_pingpong_256_colb_mma.cu)
+- [src/tensorcore_gemm/reg_pingpong_256.cu](./src/tensorcore_gemm/reg_pingpong_256.cu)
+- [src/tensorcore_gemm/reg_pingpong_256_mma.cu](./src/tensorcore_gemm/reg_pingpong_256_mma.cu)
+- [src/tensorcore_gemm/reg_pingpong_256_colb.cu](./src/tensorcore_gemm/reg_pingpong_256_colb.cu)
+- [src/tensorcore_gemm/reg_pingpong_256_colb_mma.cu](./src/tensorcore_gemm/reg_pingpong_256_colb_mma.cu)
 
 Shared code:
 
-- [src/tensorcore_gemm/implementations/gemm_256_variants/ptx_primitives.cuh](./src/tensorcore_gemm/implementations/gemm_256_variants/ptx_primitives.cuh)
-- [src/tensorcore_gemm/implementations/gemm_256_variants/gemm_256_common.cuh](./src/tensorcore_gemm/implementations/gemm_256_variants/gemm_256_common.cuh)
+- [src/tensorcore_gemm/ptx_primitives.cuh](./src/tensorcore_gemm/ptx_primitives.cuh)
+- [src/tensorcore_gemm/gemm_256_common.cuh](./src/tensorcore_gemm/gemm_256_common.cuh)
 
 ## Project Structure
 
 - `src/tensorcore_gemm/gemm.cu`: canonical CUDA source used by the runtime wrapper
 - `src/tensorcore_gemm/gemm.py`: Python API and mode dispatch
 - `src/tensorcore_gemm/cublas_gemm.cu`: cuBLAS comparison path
-- `src/tensorcore_gemm/implementations/gemm_256_variants/`: extracted variant implementations
+- `src/tensorcore_gemm/reg_pingpong_256*.cu`: custom GEMM variant sources
+- `plots/`: generated benchmark figures
 - `benchmark_tritonbench.py`: TritonBench harness
 - `modal_runner.py`: Modal L4 runner
 - `results/`: saved benchmark outputs
@@ -93,9 +94,9 @@ The large-shape plot includes the custom kernels together with `torch_mm`, `torc
 
 The baseline-relative plot compares every backend against `torch_mm` on each tested shape using `TFLOPS / torch_mm`.
 
-![Large-shape TFLOPS](./src/tensorcore_gemm/implementations/gemm_256_variants/plots/large_tflops.png)
+![Large-shape TFLOPS](./plots/large_tflops.png)
 
-![Baseline-relative TFLOPS](./src/tensorcore_gemm/implementations/gemm_256_variants/plots/baseline_relative_tflops.png)
+![Baseline-relative TFLOPS](./plots/baseline_relative_tflops.png)
 
 K-means-like shapes on L4 (`results/l4-tritonbench-20260408-111218.json`):
 
@@ -118,12 +119,4 @@ Larger shapes on L4 (`results/l4-tritonbench-20260408-110716.json`):
 
 More detail:
 
-- [src/tensorcore_gemm/implementations/gemm_256_variants/README.md](./src/tensorcore_gemm/implementations/gemm_256_variants/README.md)
-- [REG_PINGPONG_256_COMPARISON.md](./REG_PINGPONG_256_COMPARISON.md)
-
-## Reference
-
-This repo is stylistically inspired by Bruce-Lee-LY's CUDA HGEMM work and the associated Tensor Core optimization write-up:
-
-- https://github.com/Bruce-Lee-LY/cuda_hgemm
-- https://bruce-lee-ly.medium.com/nvidia-tensor-core-cuda-hgemm-advanced-optimization-5a17eb77dd85
+- [src/tensorcore_gemm/GEMM_VARIANTS.md](./src/tensorcore_gemm/GEMM_VARIANTS.md)

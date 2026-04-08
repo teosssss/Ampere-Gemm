@@ -34,15 +34,14 @@ The large-shape plot includes the custom kernels together with `torch_mm`, `torc
 
 The baseline-relative plot shows each backend as `TFLOPS / torch_mm` across the tested shapes, so values above `1.0` beat the baseline and values below `1.0` trail it.
 
-![Large-shape TFLOPS](./plots/large_tflops.png)
+![Large-shape TFLOPS](../../plots/large_tflops.png)
 
-![Baseline-relative TFLOPS](./plots/baseline_relative_tflops.png)
+![Baseline-relative TFLOPS](../../plots/baseline_relative_tflops.png)
 
 Source JSONs:
 
 - `results/l4-tritonbench-20260408-111218.json` (k-means-like shapes)
 - `results/l4-tritonbench-20260408-110716.json` (larger shapes)
-- `results/l4-tritonbench-20260408-112823.json` (post-epilogue spot check)
 
 ### K-means-like Shapes (TFLOPS)
 
@@ -66,5 +65,5 @@ Source JSONs:
 Regenerate:
 
 ```bash
-python src/tensorcore_gemm/implementations/gemm_256_variants/plot_benchmarks.py
+python src/tensorcore_gemm/plot_benchmarks.py
 ```

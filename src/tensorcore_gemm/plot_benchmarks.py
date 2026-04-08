@@ -6,9 +6,9 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 
 
-ROOT = Path(__file__).resolve().parents[4]
+ROOT = Path(__file__).resolve().parents[2]
 RESULTS = ROOT / "results"
-OUT_DIR = Path(__file__).resolve().parent / "plots"
+OUT_DIR = ROOT / "plots"
 
 KMEANS_FILE = RESULTS / "l4-tritonbench-20260408-111218.json"
 LARGE_FILE = RESULTS / "l4-tritonbench-20260408-110716.json"
